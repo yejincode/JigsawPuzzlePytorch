@@ -52,7 +52,7 @@ class DataLoader(data.Dataset):
             tile = self.__augment_tile(tile)
             # Normalize the patches indipendently to avoid low level features shortcut
             m, s = tile.view(3, -1).mean(dim=1).numpy(), tile.view(3, -1).std(dim=1).numpy()
-            s[s == 0] = 1
+            s[s == 0] = 1 #표준편차 1? 
             norm = transforms.Normalize(mean=m.tolist(), std=s.tolist())
             tile = norm(tile)
             tiles[n] = tile
