@@ -1,4 +1,4 @@
-IMAGENET_FOLD=path_to_ILSVRC2012_img
+IMAGENET_FOLD=path_to_ILSVRC2012_img #수정필요 ex) /home/pc1/fastdata/
 
 GPU=${1} # gpu used
 CHECKPOINTS_FOLD=${2} #path_to_output_folder
