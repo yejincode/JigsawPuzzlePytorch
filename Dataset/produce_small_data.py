@@ -18,15 +18,15 @@ import torchvision.transforms as transforms
 
 from PIL import Image
 
-datapath = 'path-to-imagenet'
+datapath = 'path-to-imagenet' #경로 수정 필요. ex)datapath = '/home/pc1/data/torrents/'
 
 trainval = 'train'
 #trainval = 'val'
 
 def main():
     #data = DataLoader(datapath+'/ILSVRC2012_img_train', datapath+'/ilsvrc12_train.txt')
-    data = DataLoader(datapath+'/ILSVRC2012_img_'+trainval, datapath+'/ilsvrc12_'+trainval+'.txt')
-    loader = torch.utils.data.DataLoader(dataset=data,batch_size=1,
+    data = DataLoader(datapath+'/ILSVRC2012_img_'+trainval, datapath+'/ilsvrc12_'+trainval+'.txt') #파일명 수정
+    loader = torch.utils.data.DataLoader(dataset=data,batch_size=1, 
                                         shuffle=False,num_workers=20)
     
     count = 0
