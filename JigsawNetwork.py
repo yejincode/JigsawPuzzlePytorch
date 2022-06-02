@@ -15,10 +15,10 @@ from Layers import LRN
 
 class Network(nn.Module):
 
-    def __init__(self, classes=1000):
+    def __init__(self, classes=1000): #카테고리 1000개
         super(Network, self).__init__()
 
-        self.conv = nn.Sequential()
+        self.conv = nn.Sequential() #layer 
         self.conv.add_module('conv1_s1',nn.Conv2d(3, 96, kernel_size=11, stride=2, padding=0))
         self.conv.add_module('relu1_s1',nn.ReLU(inplace=True))
         self.conv.add_module('pool1_s1',nn.MaxPool2d(kernel_size=3, stride=2))
@@ -50,7 +50,7 @@ class Network(nn.Module):
         self.fc7.add_module('drop7',nn.Dropout(p=0.5))
 
         self.classifier = nn.Sequential()
-        self.classifier.add_module('fc8',nn.Linear(4096, classes))
+        self.classifier.add_module('fc8',nn.Linear(4096, classes)) #소프트맥스 레이어는 어디에?
         
         #self.apply(weights_init)
 
