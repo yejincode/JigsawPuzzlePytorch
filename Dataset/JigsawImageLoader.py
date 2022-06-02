@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import torch.utils.data as data
 import torchvision.transforms as transforms
-from PIL import Image
+from PIL import Image #이미지 분석 및 처리 쉽게 하도록 하는 라이브러리(마스킹, 투명도, 밝기 보정,...)
 
 
 class DataLoader(data.Dataset):
@@ -79,7 +79,7 @@ class DataLoader(data.Dataset):
 
         return file_names, labels
 
-    def __retrive_permutations(self, classes):
+    def __retrive_permutations(self, classes): 
         all_perm = np.load('permutations_%d.npy' % (classes))
         # from range [1,9] to [0,8]
         if all_perm.min() == 1:
@@ -88,10 +88,10 @@ class DataLoader(data.Dataset):
         return all_perm
 
 
-def rgb_jittering(im):
+def rgb_jittering(im): #color jitter은 이미지 data augmentation 기법의 하나로, 이미지의 색상, 채도, 명도 등을 임의로 변환함. 
     im = np.array(im, 'int32')
     for ch in range(3):
         im[:, :, ch] += np.random.randint(-2, 2)
     im[im > 255] = 255
     im[im < 0] = 0
-    return im.astype('uint8')
+    return im.astype('uint8') #데이터타입변경
