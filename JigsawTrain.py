@@ -23,7 +23,7 @@ from JigsawNetwork import Network
 from TrainingUtils import adjust_learning_rate, compute_accuracy
 
 
-parser = argparse.ArgumentParser(description='Train JigsawPuzzleSolver on Imagenet')
+parser = argparse.ArgumentParser(description='Train JigsawPuzzleSolver on Imagenet') # 인자값 추가
 parser.add_argument('data', type=str, help='Path to Imagenet folder')
 parser.add_argument('--model', default=None, type=str, help='Path to pretrained model')
 parser.add_argument('--classes', default=1000, type=int, help='Number of permutation to use')
