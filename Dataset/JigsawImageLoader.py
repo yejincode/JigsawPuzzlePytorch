@@ -18,7 +18,7 @@ class DataLoader(data.Dataset):
         self.N = len(self.names)
         self.permutations = self.__retrive_permutations(classes)
 
-        self.__image_transformer = transforms.Compose([
+        self.__image_transformer = transforms.Compose([ #이미지 변환,, 사이즈 조절, 크롭, 지터링
             transforms.Resize(256, Image.BILINEAR),
             transforms.CenterCrop(255)])
         self.__augment_tile = transforms.Compose([
