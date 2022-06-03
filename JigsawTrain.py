@@ -43,7 +43,7 @@ from JigsawImageLoader import DataLoader
 
 
 def main():
-    if args.gpu is not None:
+    if args.gpu is not None: #GPU 없을 때.
         print(('Using GPU %d'%args.gpu))
         os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
         os.environ["CUDA_VISIBLE_DEVICES"]=str(args.gpu)
@@ -52,11 +52,11 @@ def main():
     
     print('Process number: %d'%(os.getpid()))
     
-    ## DataLoader initialize ILSVRC2012_train_processed
-    trainpath = args.data+'/ILSVRC2012_img_train'
+    ## DataLoader initialize ILSVRC2012_train_processed 초기화,,,
+    trainpath = args.data+'/ILSVRC2012_img_train' #수정 x
     if os.path.exists(trainpath+'_255x255'):
         trainpath += '_255x255'
-    train_data = DataLoader(trainpath,args.data+'/ilsvrc12_train.txt',
+    train_data = DataLoader(trainpath,args.data+'/ilsvrc12_train.txt', #수정 x
                             classes=args.classes)
     train_loader = torch.utils.data.DataLoader(dataset=train_data,
                                             batch_size=args.batch,
