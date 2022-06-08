@@ -31,9 +31,9 @@ class DataLoader(data.Dataset):
         ])
 
     def __getitem__(self, index):
-        framename = self.data_path + '/' + self.names[index]
+        framename = self.data_path + '/' + self.names[index] #데이터경로
 
-        img = Image.open(framename).convert('RGB')
+        img = Image.open(framename).convert('RGB') #이미지 변환
         if np.random.rand() < 0.30:
             img = img.convert('LA').convert('RGB')
 
@@ -66,7 +66,7 @@ class DataLoader(data.Dataset):
     def __len__(self):
         return len(self.names)
 
-    def __dataset_info(self, txt_labels):
+    def __dataset_info(self, txt_labels): #데이터셋 정보. 파일이름과 라벨을 나눔.
         with open(txt_labels, 'r') as f:
             images_list = f.readlines()
 
@@ -79,7 +79,7 @@ class DataLoader(data.Dataset):
 
         return file_names, labels
 
-    def __retrive_permutations(self, classes): 
+    def __retrive_permutations(self, classes): #순열
         all_perm = np.load('permutations_%d.npy' % (classes))
         # from range [1,9] to [0,8]
         if all_perm.min() == 1:
