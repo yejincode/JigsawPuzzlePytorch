@@ -38,9 +38,9 @@ class DataLoader(data.Dataset):
     def __init__(self,data_path,txt_list):
         self.data_path = data_path if data_path[-1]!='/' else data_path[:-1]
         self.names, _ = self.__dataset_info(txt_list)
-        self.__image_transformer = transforms.Compose([
+        self.__image_transformer = transforms.Compose([ #256으로 사이즈 조절, 
                             transforms.Resize(256,Image.BILINEAR),
-                            transforms.CenterCrop(255)])
+                            transforms.CenterCrop(255)]) #중앙에 255x255 크기의 패치를 자르는 produce_small_data.py를 사용하여 이미지 사전처리
         self.save_path = self.data_path+'_255x255/'
         if not os.path.exists(self.save_path):
             os.makedirs(self.save_path)
