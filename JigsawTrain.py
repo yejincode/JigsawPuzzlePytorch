@@ -71,18 +71,18 @@ def main():
                                             batch_size=args.batch,
                                             shuffle=True,
                                             num_workers=args.cores)
-    N = train_data.N
+    N = train_data.N #train데이터 개수 (?) -> 데이터 경로 imagenet으로 두고 출력했을 때 1281167
     
-    iter_per_epoch = train_data.N/args.batch
-    print('Images: train %d, validation %d'%(train_data.N,val_data.N))
+    iter_per_epoch = train_data.N/args.batch #에포크: 전체 train data / 배치사이즈로 함, 10009 나옴. -> 배치사이즈 128로 설정했었음. iteration
+    print('Images: train %d, validation %d'%(train_data.N,val_data.N)) # train 데이터 개수, val 데이터 개수 출력
     
-    # Network initialize
+    # Network initialize 네트워크 초기화
     net = Network(args.classes)
     if args.gpu is not None:
         net.cuda()
     
     ############## Load from checkpoint if exists, otherwise from model ###############
-    if os.path.exists(args.checkpoint):
+    if os.path.exists(args.checkpoint): #체크포인트에서 진행사항 저장
         files = [f for f in os.listdir(args.checkpoint) if 'pth' in f]
         if len(files)>0:
             files.sort()
@@ -98,14 +98,14 @@ def main():
         if args.model is not None:
             net.load(args.model)
 
-    criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(net.parameters(),lr=args.lr,momentum=0.9,weight_decay = 5e-4)
+    criterion = nn.CrossEntropyLoss() #표준/크로스엔트로피 사용
+    optimizer = torch.optim.SGD(net.parameters(),lr=args.lr,momentum=0.9,weight_decay = 5e-4) #최적화함수 SGD
     
     logger = Logger(args.checkpoint+'/train')
     logger_test = Logger(args.checkpoint+'/test')
     
     ############## TESTING ###############
-    if args.evaluate:
+    if args.evaluate: #EVALUATE: VALID 세트에 대한 모델 평가, TRAIN 아님
         test(net,criterion,None,val_loader,0)
         return
     
@@ -115,8 +115,8 @@ def main():
     
     # Train the Model
     batch_time, net_time = [], []
-    steps = args.iter_start
-    for epoch in range(int(args.iter_start/iter_per_epoch),args.epochs):
+    steps = args.iter_start #Starting iteration count
+    for epoch in range(int(args.iter_start/iter_per_epoch),args.epochs): #에포크 기본:70. 
         if epoch%10==0 and epoch>0:
             test(net,criterion,logger_test,val_loader,steps)
         lr = adjust_learning_rate(optimizer, epoch, init_lr=args.lr, step=20, decay=0.1)
@@ -134,19 +134,19 @@ def main():
                 labels = labels.cuda()
 
             # Forward + Backward + Optimize
-            optimizer.zero_grad()
+            optimizer.zero_grad() #Neural Network에서 parameter들을 업데이트 할때 zero_grad()를 사용, 루프가 한번 돌고나서 역전파를 하기전에 반드시 zero_grad()로 .grad 값들을 0으로 초기화
             t = time()
             outputs = net(images)
             net_time.append(time()-t)
             if len(net_time)>100:
                 del net_time[0]
             
-            prec1, prec5 = compute_accuracy(outputs.cpu().data, labels.cpu().data, topk=(1, 5))
+            prec1, prec5 = compute_accuracy(outputs.cpu().data, labels.cpu().data, topk=(1, 5)) # output, target, topk=(1,) (파라미터)
             acc = prec1[0]
 
             loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
+            loss.backward() #loss.backwards()를 호출하여 예측 손실(prediction loss)을 역전파합니다. PyTorch는 각 매개변수에 대한 손실의 변화도를 저장합니다.
+            optimizer.step() #변화도를 계산한 뒤에는 optimizer.step()을 호출하여 역전파 단계에서 수집된 변화도로 매개변수를 조정(가중치 갱신)
             loss = float(loss.cpu().data.numpy())
 
             if steps%20==0:
@@ -194,7 +194,8 @@ def test(net,criterion,logger,val_loader,steps):
         outputs = net(images)
         outputs = outputs.cpu().data
 
-        prec1, prec5 = compute_accuracy(outputs, labels, topk=(1, 5))
+        prec1, prec5 = compute_accuracy(outputs, labels, topk=(1, 5)) #pytorch 에서의 input tensor 에서 주어진 k 값에 따라 가장 큰 값 k 개를 찾는 함수이다. image classification 에서 train/validation 시 accuracy 측정할 때 자주 사용된다.
+
         accuracy.append(prec1[0])
 
     if logger is not None:
