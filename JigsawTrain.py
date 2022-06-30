@@ -52,23 +52,22 @@ def main():
     
     print('Process number: %d'%(os.getpid()))
     
-    ## DataLoader initialize ILSVRC2012_train_processed 초기화,,,
-    trainpath = args.data+'/ILSVRC2012_img_train' #수정 x
-    if os.path.exists(trainpath+'_255x255'):
+    trainpath = args.data+'/ILSVRC2012_img_train' ## DataLoader initialize ILSVRC2012_train_processed 초기화,,,
+    if os.path.exists(trainpath+'_255x255'): #해당 경로에 파일 존재한다면 경로에 _255x255 문자열 더해주기.
         trainpath += '_255x255'
-    train_data = DataLoader(trainpath,args.data+'/ilsvrc12_train.txt', #수정 x
-                            classes=args.classes)
-    train_loader = torch.utils.data.DataLoader(dataset=train_data,
+    train_data = DataLoader(trainpath,args.data+'/ilsvrc12_train.txt', #지정한 데이터 경로에 있는 데이터들을 train_data로. dataloader의 인자로 설정함. 
+                            classes=args.classes) #클래스의 수, 디폴트값은 1000
+    train_loader = torch.utils.data.DataLoader(dataset=train_data, #데이터, 배치사이즈, 셔플 o, cpu 넘버
                                             batch_size=args.batch,
                                             shuffle=True,
-                                            num_workers=args.cores)
+                                            num_workers=args.cores) #데이터셋에 성공적으로 접근했으니, 이제 데이터셋을 torch.utils.data.DataLoader 로 넘겨줍니다. DataLoader 는 데이터셋을 sampler와 조합시켜 데이터셋을 순회할 수 있는 iterable을 만들어줍니다.
     
-    valpath = args.data+'/ILSVRC2012_img_val'
-    if os.path.exists(valpath+'_255x255'):
+    valpath = args.data+'/ILSVRC2012_img_val' #검증셋 
+    if os.path.exists(valpath+'_255x255'): #255x255 문자열 더해주기
         valpath += '_255x255'
-    val_data = DataLoader(valpath, args.data+'/ilsvrc12_val.txt',
+    val_data = DataLoader(valpath, args.data+'/ilsvrc12_val.txt', #지정한 데이터 경로에 있는 데이터들을 train_data로. dataloader의 인자로 설정함.
                             classes=args.classes)
-    val_loader = torch.utils.data.DataLoader(dataset=val_data,
+    val_loader = torch.utils.data.DataLoader(dataset=val_data, #데이터, 배치사이즈, 셔플 o, cpu 넘버
                                             batch_size=args.batch,
                                             shuffle=True,
                                             num_workers=args.cores)
