@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description='Train network on Imagenet')
 parser.add_argument('--classes', default=1000, type=int, 
                     help='Number of permutations to select')
 parser.add_argument('--selection', default='max', type=str, 
-        help='Sample selected per iteration based on hamming distance: [max] highest; [mean] average')
+        help='Sample selected per iteration based on hamming distance: [max] highest; [mean] average') #해밍거리로 순열세트 선택하는 코드 같다
 args = parser.parse_args()
 
 if __name__ == "__main__":
