@@ -71,9 +71,9 @@ def main():
                                             batch_size=args.batch,
                                             shuffle=True,
                                             num_workers=args.cores)
-    N = train_data.N #train데이터 개수 (?) -> 데이터 경로 imagenet으로 두고 출력했을 때 1281167
+    N = train_data.N #train데이터 개수 -> 데이터 경로 imagenet으로 두고 출력했을 때 1281167
     
-    iter_per_epoch = train_data.N/args.batch #에포크: 전체 train data / 배치사이즈로 함, 10009 나옴. -> 배치사이즈 128로 설정했었음. iteration
+    iter_per_epoch = train_data.N/args.batch #에포크: 전체 train data / 배치사이즈, 10009 나옴. -> 배치사이즈 128로 설정했었음. iteration
     print('Images: train %d, validation %d'%(train_data.N,val_data.N)) # train 데이터 개수, val 데이터 개수 출력
     
     # Network initialize 네트워크 초기화
