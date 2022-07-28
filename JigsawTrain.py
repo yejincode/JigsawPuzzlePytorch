@@ -98,8 +98,9 @@ def main():
         if args.model is not None:
             net.load(args.model)
 
-    criterion = nn.CrossEntropyLoss() #표준/크로스엔트로피 사용
+    criterion = nn.CrossEntropyLoss() #크로스 엔트로피 -> 분류 문제에 주로 쓰임.  정답과 예측값 사이의 유사정도를 파악 할 수 있는 loss
     optimizer = torch.optim.SGD(net.parameters(),lr=args.lr,momentum=0.9,weight_decay = 5e-4) #최적화함수 SGD
+    #SGD(Stochastic Gradient Descent) 는 전체데이터 중 랜덤하게 선택된 단 하나의 데이터(배치사이즈=1)를 이용하여 학습시키는 경사하강법
     
     logger = Logger(args.checkpoint+'/train')
     logger_test = Logger(args.checkpoint+'/test')
