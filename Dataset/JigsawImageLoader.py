@@ -7,7 +7,10 @@ Created on Fri Aug 18 11:58:07 2017
 import numpy as np
 import torch
 import torch.utils.data as data
-import torchvision.transforms as transforms
+import torchvision.transforms as transforms 
+# transform 을 해서 데이터를 조작하고 학습에 적합하게 만들어야 합니다.
+# PyTorch의 torchvision 라이브러리는 transforms 에서 다양한 변환 기능을 제공합니다. 
+# transform을 사용하여 데이터의 일부 조작을 수행하고 훈련에 적합하게 만들 수 있습니다.
 from PIL import Image #이미지 분석 및 처리 쉽게 하도록 하는 라이브러리(마스킹, 투명도, 밝기 보정,...)
 
 
@@ -18,14 +21,14 @@ class DataLoader(data.Dataset):
         self.N = len(self.names)
         self.permutations = self.__retrive_permutations(classes)
 
-        self.__image_transformer = transforms.Compose([ #이미지 변환,, 사이즈 조절, 크롭, 지터링
+        self.__image_transformer = transforms.Compose([ #여러 단계로 변환해야 하는 경우, Compose를 통해 여러 단계를 묶을 수 있다.
             transforms.Resize(256, Image.BILINEAR),
             transforms.CenterCrop(255)])
         self.__augment_tile = transforms.Compose([
             transforms.RandomCrop(64),
             transforms.Resize((75, 75), Image.BILINEAR),
             transforms.Lambda(rgb_jittering),
-            transforms.ToTensor(),
+            transforms.ToTensor(), #데이터를 tensor로 바꿔준다. 텐서란 매우 수학적인 개념으로 데이터의 배열이라고 볼 수 있습니다. 텐서의 Rank는 간단히 말해서 몇 차원 배열인가를 의미합니다
             # transforms.Normalize(mean=[0.485, 0.456, 0.406],
             # std =[0.229, 0.224, 0.225])
         ])
