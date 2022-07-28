@@ -106,7 +106,7 @@ def main():
     logger_test = Logger(args.checkpoint+'/test')
     
     ############## TESTING ###############
-    if args.evaluate: #EVALUATE: VALID 세트에 대한 모델 평가, TRAIN 아님 (위에 하이퍼파라미터 참고)
+    if args.evaluate: #EVALUATE: VALID 세트에 대한 모델 평가, TRAIN 아님 (위에 하이퍼파라미터 참고) -> 값이 true 일 때 조건문 실행. (위에 체크포인트에서 평가 됐는지 여부 보는 듯)
         test(net,criterion,None,val_loader,0)
         return
     
