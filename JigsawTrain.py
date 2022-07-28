@@ -23,7 +23,7 @@ from JigsawNetwork import Network
 from TrainingUtils import adjust_learning_rate, compute_accuracy
 
 
-parser = argparse.ArgumentParser(description='Train JigsawPuzzleSolver on Imagenet') # 인자값 추가
+parser = argparse.ArgumentParser(description='Train JigsawPuzzleSolver on Imagenet') # 모델에 사용되는 하이퍼파라미터 정의
 parser.add_argument('data', type=str, help='Path to Imagenet folder')
 parser.add_argument('--model', default=None, type=str, help='Path to pretrained model')
 parser.add_argument('--classes', default=1000, type=int, help='Number of permutation to use')
@@ -34,7 +34,7 @@ parser.add_argument('--batch', default=256, type=int, help='batch size')
 parser.add_argument('--checkpoint', default='checkpoints/', type=str, help='checkpoint folder')
 parser.add_argument('--lr', default=0.001, type=float, help='learning rate for SGD optimizer')
 parser.add_argument('--cores', default=0, type=int, help='number of CPU core for loading')
-parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
+parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true', #action='store_true'를 사용하여 해당하는 인자(argument)가 입력되면 True, 입력되지 않으면 False로 인식하게 됩니다.
                     help='evaluate model on validation set, No training')
 args = parser.parse_args()
 
@@ -106,7 +106,7 @@ def main():
     logger_test = Logger(args.checkpoint+'/test')
     
     ############## TESTING ###############
-    if args.evaluate: #EVALUATE: VALID 세트에 대한 모델 평가, TRAIN 아님
+    if args.evaluate: #EVALUATE: VALID 세트에 대한 모델 평가, TRAIN 아님 (위에 하이퍼파라미터 참고)
         test(net,criterion,None,val_loader,0)
         return
     
