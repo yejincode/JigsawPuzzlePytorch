@@ -14,7 +14,7 @@ def adjust_learning_rate(optimizer, epoch, init_lr=0.1, step=30, decay=0.1):
         param_group['lr'] = lr
     return lr
 
-# 정확도 측정
+# 정확도 측정 #top 5 error...
 def compute_accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     maxk = max(topk)
