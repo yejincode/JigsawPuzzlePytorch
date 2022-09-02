@@ -56,7 +56,7 @@ def main():
     if os.path.exists(trainpath+'_255x255'): #해당 경로에 파일 존재한다면 경로에 _255x255 문자열 더해주기.
         trainpath += '_255x255'
     train_data = DataLoader(trainpath,args.data+'/ilsvrc12_train.txt', #지정한 데이터 경로에 있는 데이터들을 train_data로. dataloader의 인자로 설정함. data_path, txt_list, classes=1000 -> 기본
-                            classes=args.classes) #클래스의 수, 디폴트값은 1000
+                            classes=args.classes) #사용하는 순열의 수, 디폴트값은 1000
     train_loader = torch.utils.data.DataLoader(dataset=train_data, #데이터, 배치사이즈, 셔플 o, cpu 넘버
                                             batch_size=args.batch,
                                             shuffle=True,
