@@ -43,7 +43,7 @@ from JigsawImageLoader import DataLoader
 
 
 def main():
-    if args.gpu is not None: #GPU 없을 때.
+    if args.gpu is not None: #GPU 을 때.
         print(('Using GPU %d'%args.gpu))
         os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
         os.environ["CUDA_VISIBLE_DEVICES"]=str(args.gpu)
